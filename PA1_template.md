@@ -21,6 +21,8 @@ hist(TotalStepsPerDay$x,
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
 
+### Mean total steps per day
+
 ```r
 # mean total steps per day
 mean(TotalStepsPerDay$x, na.rm = T)
@@ -29,6 +31,8 @@ mean(TotalStepsPerDay$x, na.rm = T)
 ```
 ## [1] 10766.19
 ```
+
+### Median total steps per day
 
 ```r
 # median total steps per day
@@ -55,7 +59,7 @@ plot(AvgStepsPerInterval,
      main = "Average Steps for Each 5-minute Interval")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 ```r
 # Interval with most steps per day on average
@@ -72,6 +76,11 @@ AvgStepsPerInterval[AvgStepsPerInterval$x == max(AvgStepsPerInterval$x), 1]
 ```r
 Activity.NA.bool <- is.na(Activity$steps)
 Activity.NA <- Activity[Activity.NA.bool,]
+```
+
+### Number of intervals with no data
+
+```r
 # Number of intervals with no data
 length(Activity.NA[,1])
 ```
@@ -79,6 +88,10 @@ length(Activity.NA[,1])
 ```
 ## [1] 2304
 ```
+
+### Imputation strategy
+Missing values for steps in a given interval are imputed using the mean number
+of steps for that interval averaged across all days
 
 ```r
 ImputedActivity <- Activity
@@ -102,11 +115,11 @@ ImputedTotalStepsPerDay <- aggregate(ImputedActivity$steps, list(ImputedActivity
 hist(ImputedTotalStepsPerDay$x, 
      xlab = "Steps per Day", 
      ylab = "Number of Days", 
-     main = "Frequency of total steps per day with NA values imputed", 
+     main = "Frequency of Total Steps per Day with NA Values Imputed", 
      breaks = "Sturges")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
 
 ```r
 # mean total steps per day
@@ -160,4 +173,14 @@ ggplot(ImputedActivityFactoredAvgSteps, aes(Interval, x)) +
     ggtitle("Average Number of Steps at Each Interval for Weekdays and Weekends")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+
+There are differences in the activity pattern between weekdays and weekends. 
+
+During weekdays there is greater activity from 5AM till about 9AM as compared 
+to weekends. 
+
+There is more activity during the middle portion of the day in the weekends 
+compared to the weekdays.
+
+The activity continues later in the day during weekends than during weekdays.

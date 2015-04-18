@@ -20,8 +20,16 @@ hist(TotalStepsPerDay$x,
      ylab = "Number of Days", 
      main = "Frequency of Total Steps per Day", 
      breaks = "Sturges")
+```
+
+### Mean total steps per day
+```{r}
 # mean total steps per day
 mean(TotalStepsPerDay$x, na.rm = T)
+```
+
+### Median total steps per day
+```{r}
 # median total steps per day
 median(TotalStepsPerDay$x, na.rm = T)
 ```
@@ -49,9 +57,18 @@ AvgStepsPerInterval[AvgStepsPerInterval$x == max(AvgStepsPerInterval$x), 1]
 ```{r}
 Activity.NA.bool <- is.na(Activity$steps)
 Activity.NA <- Activity[Activity.NA.bool,]
+```
+
+### Number of intervals with no data
+```{r}
 # Number of intervals with no data
 length(Activity.NA[,1])
+```
 
+### Imputation strategy
+Missing values for steps in a given interval are imputed using the mean number
+of steps for that interval averaged across all days
+```{r}
 ImputedActivity <- Activity
 
 # iterate through each row of dataset
@@ -73,7 +90,7 @@ ImputedTotalStepsPerDay <- aggregate(ImputedActivity$steps, list(ImputedActivity
 hist(ImputedTotalStepsPerDay$x, 
      xlab = "Steps per Day", 
      ylab = "Number of Days", 
-     main = "Frequency of total steps per day with NA values imputed", 
+     main = "Frequency of Total Steps per Day with NA Values Imputed", 
      breaks = "Sturges")
 # mean total steps per day
 mean(ImputedTotalStepsPerDay$x, na.rm = T)
@@ -113,3 +130,13 @@ ggplot(ImputedActivityFactoredAvgSteps, aes(Interval, x)) +
     ylab("Number of Steps") +
     ggtitle("Average Number of Steps at Each Interval for Weekdays and Weekends")
 ```
+
+There are differences in the activity pattern between weekdays and weekends. 
+
+During weekdays there is greater activity from 5AM till about 9AM as compared 
+to weekends. 
+
+There is more activity during the middle portion of the day in the weekends 
+compared to the weekdays.
+
+The activity continues later in the day during weekends than during weekdays.
