@@ -13,9 +13,9 @@ Activity <- read.csv('activity.csv')
 ```r
 TotalStepsPerDay <- aggregate(Activity$steps, list(Activity$date), sum)
 hist(TotalStepsPerDay$x, 
-     xlab = "Steps per day", 
-     ylab = "Number of days", 
-     main = "Histogram of total steps per day", 
+     xlab = "Steps per Day", 
+     ylab = "Number of Days", 
+     main = "Frequency of Total Steps per Day", 
      breaks = "Sturges")
 ```
 
@@ -50,9 +50,9 @@ AvgStepsPerInterval <- aggregate(Activity$steps,
                              na.action = na.omit)
 plot(AvgStepsPerInterval, 
      type = "l", 
-     xlab = "5-minute interval code", 
-     ylab = "Avg num of steps",
-     main = "Average steps for each 5-minute interval")
+     xlab = "5-minute Interval Code", 
+     ylab = "Avg Num of Steps",
+     main = "Average Steps for Each 5-minute Interval")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
@@ -100,9 +100,9 @@ for(i in 1:nrow(ImputedActivity))
 
 ImputedTotalStepsPerDay <- aggregate(ImputedActivity$steps, list(ImputedActivity$date), sum)
 hist(ImputedTotalStepsPerDay$x, 
-     xlab = "Steps per day", 
-     ylab = "Number of days", 
-     main = "Histogram of total steps per day with NA values imputed", 
+     xlab = "Steps per Day", 
+     ylab = "Number of Days", 
+     main = "Frequency of total steps per day with NA values imputed", 
      breaks = "Sturges")
 ```
 
@@ -127,3 +127,37 @@ median(ImputedTotalStepsPerDay$x, na.rm = T)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+```r
+ImputedActivityFactored <- ImputedActivity
+# factor dates to either "weekday" or "weekend"
+ImputedActivityFactored$TypeOfDay <- apply(ImputedActivity, 1, function(row) {
+    day = weekdays(as.POSIXct(row[2]))
+    if (day %in% c("Saturday", "Sunday")) {
+        as.factor("Weekend")
+    }
+    else {
+        as.factor("Weekday")
+    }
+})
+
+# aggregate average steps by interval code and weekday/weekend factor
+ImputedActivityFactoredAvgSteps <- aggregate(
+    ImputedActivityFactored$steps, 
+    list(Interval = ImputedActivityFactored$interval, TypeOfDay = ImputedActivityFactored$TypeOfDay), 
+    mean, 
+    na.rm = T, 
+    na.action = na.omit)
+
+library(ggplot2)
+
+# plot avg number of steps against interval code, using panels for weekday/weekend
+ggplot(ImputedActivityFactoredAvgSteps, aes(Interval, x)) + 
+    facet_grid(TypeOfDay ~ .) + 
+    geom_line() +
+    xlab("5-min Interval Code") + 
+    ylab("Number of Steps") +
+    ggtitle("Average Number of Steps at Each Interval for Weekdays and Weekends")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
