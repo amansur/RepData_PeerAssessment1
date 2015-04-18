@@ -1,34 +1,48 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
-```{r}
+
+```r
 Activity <- read.csv('activity.csv')
 ```
 
 
 ## What is mean total number of steps taken per day?
-```{r}
+
+```r
 TotalStepsPerDay <- aggregate(Activity$steps, list(Activity$date), sum)
 hist(TotalStepsPerDay$x, 
      xlab = "Steps per day", 
      ylab = "Number of days", 
      main = "Histogram of total steps per day", 
      breaks = "Sturges")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+
+```r
 # mean total steps per day
 mean(TotalStepsPerDay$x, na.rm = T)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 # median total steps per day
 median(TotalStepsPerDay$x, na.rm = T)
 ```
 
+```
+## [1] 10765
+```
+
 
 ## What is the average daily activity pattern?
-```{r}
+
+```r
 AvgStepsPerInterval <- aggregate(Activity$steps, 
                              list(Activity$interval), 
                              mean, 
@@ -39,19 +53,34 @@ plot(AvgStepsPerInterval,
      xlab = "5-minute interval code", 
      ylab = "Avg num of steps",
      main = "Average steps for each 5-minute interval")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
+```r
 # Interval with most steps per day on average
 AvgStepsPerInterval[AvgStepsPerInterval$x == max(AvgStepsPerInterval$x), 1]
 ```
 
+```
+## [1] 835
+```
+
 
 ## Imputing missing values
-```{r}
+
+```r
 Activity.NA.bool <- is.na(Activity$steps)
 Activity.NA <- Activity[Activity.NA.bool,]
 # Number of intervals with no data
 length(Activity.NA[,1])
+```
 
+```
+## [1] 2304
+```
+
+```r
 ImputedActivity <- Activity
 
 # iterate through each row of dataset
@@ -75,10 +104,26 @@ hist(ImputedTotalStepsPerDay$x,
      ylab = "Number of days", 
      main = "Histogram of total steps per day with NA values imputed", 
      breaks = "Sturges")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
+```r
 # mean total steps per day
 mean(ImputedTotalStepsPerDay$x, na.rm = T)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 # median total steps per day
 median(ImputedTotalStepsPerDay$x, na.rm = T)
+```
+
+```
+## [1] 10766.19
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
