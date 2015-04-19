@@ -61,6 +61,8 @@ plot(AvgStepsPerInterval,
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
+### Interval with greatest average steps per day
+
 ```r
 # Interval with most steps per day on average
 AvgStepsPerInterval[AvgStepsPerInterval$x == max(AvgStepsPerInterval$x), 1]
@@ -119,7 +121,9 @@ hist(ImputedTotalStepsPerDay$x,
      breaks = "Sturges")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+
+### Mean total steps per day
 
 ```r
 # mean total steps per day
@@ -129,6 +133,8 @@ mean(ImputedTotalStepsPerDay$x, na.rm = T)
 ```
 ## [1] 10766.19
 ```
+
+### Median total steps per day
 
 ```r
 # median total steps per day
@@ -173,7 +179,7 @@ ggplot(ImputedActivityFactoredAvgSteps, aes(Interval, x)) +
     ggtitle("Average Number of Steps at Each Interval for Weekdays and Weekends")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-12-1.png) 
 
 There are differences in the activity pattern between weekdays and weekends. 
 

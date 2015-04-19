@@ -47,7 +47,10 @@ plot(AvgStepsPerInterval,
      xlab = "5-minute Interval Code", 
      ylab = "Avg Num of Steps",
      main = "Average Steps for Each 5-minute Interval")
+```
 
+### Interval with greatest average steps per day
+```{r}
 # Interval with most steps per day on average
 AvgStepsPerInterval[AvgStepsPerInterval$x == max(AvgStepsPerInterval$x), 1]
 ```
@@ -92,8 +95,16 @@ hist(ImputedTotalStepsPerDay$x,
      ylab = "Number of Days", 
      main = "Frequency of Total Steps per Day with NA Values Imputed", 
      breaks = "Sturges")
+```
+
+### Mean total steps per day
+```{r}
 # mean total steps per day
 mean(ImputedTotalStepsPerDay$x, na.rm = T)
+```
+
+### Median total steps per day
+```{r}
 # median total steps per day
 median(ImputedTotalStepsPerDay$x, na.rm = T)
 ```
